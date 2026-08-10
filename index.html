@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signals and Communication Systems — 100 Question Practice Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101B2D;
+  --ink-soft:#48586E;
+  --paper:#E7ECF2;
+  --card:#FFFFFF;
+  --rule:#C6D2E0;
+  --signal:#0E7C66;
+  --clip:#C0522A;
+  --amber:#E0A03C;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(rgba(16,27,45,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,27,45,.055) 1px, transparent 1px);
+  background-size:26px 26px;
+  color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.55;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 18px 90px}
+
+/* ---------- header / scope ---------- */
+header.scope{
+  background:var(--ink);
+  color:#EAF1F6;
+  border-bottom:3px solid var(--signal);
+  margin-bottom:26px;
+}
+.scope-inner{max-width:920px;margin:0 auto;padding:22px 18px 18px}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:#7FA8A0;margin:0 0 6px
+}
+h1{
+  font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(22px,4vw,32px);
+  line-height:1.15;margin:0 0 4px;letter-spacing:-.02em
+}
+.subline{font-size:14px;color:#9FB2C4;margin:0}
+canvas#trace{display:block;width:100%;height:78px;margin-top:14px;border-top:1px solid #22354F;border-bottom:1px solid #22354F}
+.readout{
+  display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9FB2C4
+}
+.readout b{color:#EAF1F6;font-weight:600}
+.readout .good{color:#4FD1AE}
+.readout .bad{color:#F0916A}
+
+/* ---------- controls ---------- */
+.controls{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  padding:14px 0 20px;border-bottom:1px solid var(--rule);margin-bottom:26px
+}
+button{font-family:inherit;cursor:pointer}
+.chip{
+  border:1px solid var(--rule);background:var(--card);color:var(--ink-soft);
+  padding:7px 13px;border-radius:999px;font-size:13px;font-weight:500;transition:.15s
+}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip.ghost{margin-left:auto;border-style:dashed}
+
+/* ---------- sections ---------- */
+section{margin-bottom:44px;scroll-margin-top:16px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.sec-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--signal);font-weight:600}
+h2{font-family:'Sora',sans-serif;font-size:19px;font-weight:600;margin:0;letter-spacing:-.01em}
+.sec-note{font-size:13px;color:var(--ink-soft);margin:0 0 18px;border-bottom:1px solid var(--rule);padding-bottom:10px}
+
+/* ---------- question card ---------- */
+.q{
+  background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--rule);
+  border-radius:3px;padding:15px 17px;margin-bottom:12px
+}
+.q.correct{border-left-color:var(--signal)}
+.q.wrong{border-left-color:var(--clip)}
+.q-head{display:flex;gap:11px;align-items:flex-start}
+.qn{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);padding-top:3px;min-width:26px}
+.qt{margin:0;font-weight:500}
+.qt em{font-style:italic;color:var(--ink-soft)}
+code,.mono{font-family:'IBM Plex Mono',monospace;font-size:.92em;background:#EDF1F6;padding:1px 5px;border-radius:3px}
+
+.opts{list-style:none;margin:11px 0 0;padding:0 0 0 37px;display:grid;gap:6px}
+.opt{
+  display:flex;gap:9px;align-items:flex-start;width:100%;text-align:left;
+  background:transparent;border:1px solid var(--rule);border-radius:3px;
+  padding:8px 11px;font-size:15px;color:var(--ink);transition:.12s
+}
+.opt:hover:not(:disabled){border-color:var(--ink);background:#F4F7FA}
+.opt .key{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);padding-top:2px}
+.opt.is-correct{border-color:var(--signal);background:#E6F4EF}
+.opt.is-correct .key{color:var(--signal)}
+.opt.is-wrong{border-color:var(--clip);background:#FAECE6}
+.opt.is-wrong .key{color:var(--clip)}
+.opt:disabled{cursor:default}
+
+.tf{display:flex;gap:8px;padding:11px 0 0 37px}
+.tf .opt{width:auto;min-width:104px;justify-content:center}
+
+.tools{padding:10px 0 0 37px;display:flex;gap:8px;flex-wrap:wrap}
+.mini{
+  border:1px solid var(--rule);background:transparent;color:var(--ink-soft);
+  font-size:12.5px;padding:5px 11px;border-radius:3px
+}
+.mini:hover{border-color:var(--ink);color:var(--ink)}
+.mini.pos:hover{border-color:var(--signal);color:var(--signal)}
+.mini.neg:hover{border-color:var(--clip);color:var(--clip)}
+
+.ans{
+  margin:11px 0 0 37px;padding:10px 13px;border-left:2px solid var(--signal);
+  background:#F1F6F4;font-size:14.5px;display:none
+}
+.ans.show{display:block}
+.ans .lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--signal);display:block;margin-bottom:3px}
+
+/* ---------- match ---------- */
+.match{padding:12px 0 0 37px}
+.match table{border-collapse:collapse;width:100%;font-size:14.5px}
+.match th{
+  text-align:left;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-soft);font-weight:500;
+  border-bottom:1px solid var(--rule);padding:0 8px 6px 0
+}
+.match td{padding:7px 8px 7px 0;border-bottom:1px solid #EDF1F6;vertical-align:middle}
+.match select{
+  font-family:'IBM Plex Sans',sans-serif;font-size:14px;padding:5px 7px;
+  border:1px solid var(--rule);border-radius:3px;background:#fff;color:var(--ink);width:100%;max-width:250px
+}
+.match select.ok{border-color:var(--signal);background:#E6F4EF}
+.match select.no{border-color:var(--clip);background:#FAECE6}
+
+footer{
+  border-top:1px solid var(--rule);padding-top:18px;font-size:13px;color:var(--ink-soft);
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap
+}
+
+@media print{
+  body{background:#fff}
+  header.scope{background:#fff;color:#000;border-bottom:2px solid #000}
+  .eyebrow,.subline,.readout{color:#333}
+  canvas#trace,.controls,.tools,.mini{display:none}
+  .ans{display:block}
+  .q{break-inside:avoid;border-left-color:var(--rule)}
+}
+@media (max-width:560px){
+  .opts,.tools,.ans,.match,.tf{padding-left:0;margin-left:0}
+  .ans{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<header class="scope">
+  <div class="scope-inner">
+    <p class="eyebrow">IIIT Bhopal · CSE-3005 · 3rd Sem</p>
+    <h1>Signals and Communication Systems — 100 Question Practice Test</h1>
+    <p class="subline">Mini-test format: MCQ · Fill in the blanks · True/False · Match the pair · Short answer · Numerical</p>
+    <canvas id="trace" aria-hidden="true"></canvas>
+    <div class="readout">
+      <span>ATTEMPTED <b id="r-att">0</b>/100</span>
+      <span>CORRECT <b class="good" id="r-cor">0</b></span>
+      <span>MISSED <b class="bad" id="r-wrong">0</b></span>
+      <span>ACCURACY <b id="r-acc">—</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="controls" id="controls">
+    <button class="chip" data-jump="s1">Q1 · MCQ (40)</button>
+    <button class="chip" data-jump="s2">Q2 · Fill in the blanks (20)</button>
+    <button class="chip" data-jump="s3">Q3 · True / False (15)</button>
+    <button class="chip" data-jump="s4">Q4 · Match the pair (5)</button>
+    <button class="chip" data-jump="s5">Q5 · Short answer (12)</button>
+    <button class="chip" data-jump="s6">Q6 · Numerical (8)</button>
+    <button class="chip ghost" id="revealAll">Show all answers</button>
+    <button class="chip" id="reset">Reset</button>
+  </div>
+
+  <section id="s1">
+    <div class="sec-head"><span class="sec-num">Q1</span><h2>Multiple Choice Questions</h2></div>
+    <p class="sec-note">40 questions · pick one option · feedback is instant</p>
+    <div id="mcq"></div>
+  </section>
+
+  <section id="s2">
+    <div class="sec-head"><span class="sec-num">Q2</span><h2>Fill in the Blanks</h2></div>
+    <p class="sec-note">20 questions · answer in your head or on paper, then reveal and mark yourself</p>
+    <div id="fill"></div>
+  </section>
+
+  <section id="s3">
+    <div class="sec-head"><span class="sec-num">Q3</span><h2>True / False</h2></div>
+    <p class="sec-note">15 statements · decide before you tap</p>
+    <div id="tf"></div>
+  </section>
+
+  <section id="s4">
+    <div class="sec-head"><span class="sec-num">Q4</span><h2>Match the Pair</h2></div>
+    <p class="sec-note">5 sets · choose a Column B entry for each Column A entry, then check the set</p>
+    <div id="match"></div>
+  </section>
+
+  <section id="s5">
+    <div class="sec-head"><span class="sec-num">Q5</span><h2>Short Answer</h2></div>
+    <p class="sec-note">12 questions · write the full answer, then compare with the model answer</p>
+    <div id="short"></div>
+  </section>
+
+  <section id="s6">
+    <div class="sec-head"><span class="sec-num">Q6</span><h2>Numerical</h2></div>
+    <p class="sec-note">8 questions · show your working, then check the result</p>
+    <div id="num"></div>
+  </section>
+
+  <footer>
+    <span>Covers: signal basics · standard signals · signal types · operations · Fourier series (trigonometric, exponential, compact) · Fourier transform properties</span>
+    <span class="mono">CSE-3005</span>
+  </footer>
+</div>
+
+<script>
+/* ============================== QUESTION BANK ============================== */
+
+const MCQ = [
+ {q:"A signal that exists only for a finite duration is generally:",o:["Power signal","Energy signal","Periodic signal","Random signal"],a:1,e:"Finite duration ⇒ finite energy and zero average power, so it is an energy signal."},
+ {q:"Which operation compresses a signal in time?",o:["x(2t)","x(t−2)","x(t/2)","x(−t)"],a:0,e:"x(at) with a > 1 compresses the time axis; a < 1 expands it."},
+ {q:"The Fourier series of a periodic signal consists of:",o:["Only a DC component","Infinite sinusoidal components","Random frequencies","Noise components"],a:1,e:"A periodic signal is a sum of a DC term plus harmonics at nω₀, n = 1 to ∞."},
+ {q:"The Fourier Transform converts:",o:["Time-domain signal into frequency-domain signal","Frequency into voltage","Analog into digital","Power into energy"],a:0,e:"X(f) = ∫x(t)e^(−j2πft)dt maps the signal from t to f."},
+ {q:"The unit step function u(t) equals:",o:["t for t ≥ 0","1 for t ≥ 0, else 0","t²/2 for t ≥ 0","−1 for t < 0"],a:1,e:"u(t) = 1 for t ≥ 0 and 0 otherwise."},
+ {q:"The slope of the unit ramp signal r(t) for t ≥ 0 is:",o:["0","1","t","∞"],a:1,e:"r(t) = t, so dr/dt = 1."},
+ {q:"The signum function sgn(t) for t < 0 equals:",o:["0","+1","−1","t"],a:2,e:"sgn(t) = +1 for t > 0 and −1 for t < 0."},
+ {q:"The sinc function is defined as:",o:["sin t","(sin t)/t","t/(sin t)","cos t / t"],a:1,e:"sinc(t) = sin(t)/t, with the main lobe at t = 0."},
+ {q:"The unit parabolic signal p(t) for t ≥ 0 is:",o:["t","t²","t²/2","2t²"],a:2,e:"p(t) = t²/2 for t ≥ 0, 0 otherwise."},
+ {q:"For the exponential signal x(t) = A·e^(αt), a decaying waveform is obtained when:",o:["α = 0","α is positive","α is negative","A is negative"],a:2,e:"Negative α gives a decaying exponential; positive α gives a growing one."},
+ {q:"A signal satisfying x(−t) = x(t) is:",o:["Odd","Even","Causal","Random"],a:1,e:"Even symmetry — the cosine signal is the standard example."},
+ {q:"Which of the following is an odd signal?",o:["cos t","|t|","sin t","t²"],a:2,e:"sin(−t) = −sin t, so the sine signal is odd."},
+ {q:"For a power signal, the total energy is:",o:["Zero","Finite","Infinite","Negative"],a:2,e:"Power signals have E = ∞ and finite non-zero average power."},
+ {q:"For an energy signal, the average power is:",o:["Zero","Finite and non-zero","Infinite","Equal to the energy"],a:0,e:"Energy is finite, so dividing by T → ∞ gives P = 0."},
+ {q:"A signal is periodic if:",o:["x(t) = x(t ± T₀)","x(−t) = x(t)","x(t) = 0 for t < 0","E is finite"],a:0,e:"Periodicity means the signal repeats after T₀."},
+ {q:"A single rectangular pulse is an example of:",o:["A periodic signal","An aperiodic signal","A random signal","A digital signal"],a:1,e:"It never repeats, so it is aperiodic (and an energy signal)."},
+ {q:"The graph of x(t − 2) compared to x(t) is shifted:",o:["Left by 2","Right by 2","Up by 2","Compressed by 2"],a:1,e:"Subtracting from t delays the signal, shifting it right."},
+ {q:"x(t + 2) shifts the graph:",o:["Right by 2","Left by 2","Down by 2","Not at all"],a:1,e:"Adding to t advances the signal, shifting it left."},
+ {q:"Time shifting is basically used in flip-flops for the purpose of:",o:["Amplifying a signal","Delaying a signal","Filtering noise","Sampling"],a:1,e:"The shift x(t − T_d) realises a delay."},
+ {q:"For x(at) with a < 1, the signal is:",o:["Compressed in time","Expanded in time","Reversed","Unchanged"],a:1,e:"a < 1 stretches the time axis."},
+ {q:"Time reversal x(−t) produces a waveform that is:",o:["Mirrored about the vertical axis","Mirrored about the horizontal axis","Shifted right","Scaled in amplitude"],a:0,e:"The t-axis flips sign, so the shape reflects about t = 0."},
+ {q:"x(−(t − 3)) shifts x(−t) by:",o:["3 to the right","3 to the left","6 to the right","No shift"],a:1,e:"As written in the notes, this shifts x(−t) by 3 in the left direction."},
+ {q:"A·x(t) with A = 3 represents:",o:["Time scaling","Amplitude scaling","Time shifting","Time reversal"],a:1,e:"Only the amplitude axis is scaled."},
+ {q:"The fundamental angular frequency ω₀ of a periodic signal of period T is:",o:["1/T","2π/T","T/2π","2πT"],a:1,e:"ω₀ = 2πf = 2π/T."},
+ {q:"In the trigonometric Fourier series, the coefficient a₀ represents:",o:["The peak value","The average (DC) value","The first harmonic","The phase"],a:1,e:"a₀ = (1/T)∫x(t)dt is the DC or mean value."},
+ {q:"For an even periodic signal, the Fourier coefficients satisfy:",o:["aₙ = 0","bₙ = 0","a₀ = 0","aₙ = bₙ"],a:1,e:"Even signals contain only cosine terms, so bₙ = 0."},
+ {q:"For an odd periodic signal:",o:["aₙ = 0","bₙ = 0","a₀ ≠ 0","Both aₙ and bₙ are zero"],a:0,e:"Odd signals contain only sine terms, so aₙ = 0."},
+ {q:"For a signal that is neither odd nor even:",o:["aₙ = bₙ = 0","aₙ ≠ 0 and bₙ ≠ 0","Only a₀ exists","The series does not exist"],a:1,e:"Both cosine and sine terms are present."},
+ {q:"The three forms of the Fourier series are:",o:["Trigonometric, exponential, compact","Discrete, continuous, digital","Even, odd, neither","Linear, scaled, shifted"],a:0,e:"These are the three standard representations."},
+ {q:"In the compact Fourier series, Cₙ equals:",o:["aₙ + bₙ","√(aₙ² + bₙ²)","aₙ·bₙ","aₙ − bₙ"],a:1,e:"Cₙ is the magnitude of the nth harmonic."},
+ {q:"The phase θ in the compact Fourier series is:",o:["tan⁻¹(aₙ/bₙ)","tan⁻¹(−bₙ/aₙ)","sin⁻¹(bₙ)","0 always"],a:1,e:"θ = tan⁻¹(−bₙ/aₙ)."},
+ {q:"If bₙ = 0 for a signal, its compact series has:",o:["Cₙ = aₙ and θ = 0","Cₙ = bₙ and θ = π","Cₙ = 0","θ = π/2"],a:0,e:"With no sine terms the magnitude is aₙ and the phase is zero."},
+ {q:"The exponential Fourier series coefficient is:",o:["(1/T)∫x(t)e^(−jnω₀t)dt","(2/T)∫x(t)cos nω₀t dt","T∫x(t)dt","∫x(t)e^(jnω₀t)dt"],a:0,e:"Cₙ = (1/T)∫_T x(t)e^(−jnω₀t)dt."},
+ {q:"The relation between aₙ and the exponential coefficient Cₙ is:",o:["aₙ = Re[Cₙ]","aₙ = 2Re[Cₙ]","aₙ = −2Im[Cₙ]","aₙ = |Cₙ|"],a:1,e:"aₙ = 2Re[Cₙ] and bₙ = −2Im[Cₙ]."},
+ {q:"In the exponential Fourier series, C₀ is calculated separately because:",o:["It is always zero","Cₙ at n = 0 may point to infinity","It has no physical meaning","It equals aₙ"],a:1,e:"The general Cₙ expression can be indeterminate at n = 0, so C₀ is found independently."},
+ {q:"The Fourier transform of x(t − T_d) is:",o:["e^(−j2πfT_d)X(f)","e^(j2πfT_d)X(f)","X(f − T_d)","(1/T_d)X(f/T_d)"],a:0,e:"Time shifting multiplies the spectrum by a linear phase term; the magnitude is unchanged."},
+ {q:"Time scaling in the Fourier transform gives x(αt) ⇌",o:["αX(αf)","(1/α)X(f/α)","X(f − α)","e^(−jα)X(f)"],a:1,e:"Compressing in time expands in frequency and scales the amplitude by 1/α."},
+ {q:"Multiplying x(t) by e^(j2πf_c t) results in:",o:["X(f − f_c)","X(f + f_c)","(1/f_c)X(f)","X(f)·f_c"],a:0,e:"Frequency shifting — this is the basis of amplitude modulation."},
+ {q:"The Fourier transform of dx(t)/dt is:",o:["X(f)/j2πf","j2πf·X(f)","−j2πt·X(f)","dX(f)/df"],a:1,e:"Differentiation in time multiplies the spectrum by j2πf."},
+ {q:"By the duality property, if x(t) ⇌ X(f), then X(t) ⇌",o:["x(f)","x(−f)","−x(f)","X(−f)"],a:1,e:"Duality/symmetry: X(t) transforms to x(−f)."}
+];
+
+const FILL = [
+ {q:"A signal with finite energy is called an ______ signal.",a:"Energy signal"},
+ {q:"Time shifting is represented as x(t) → ______.",a:"x(t ± T₀)"},
+ {q:"The symbol for angular frequency is ______.",a:"ω (omega); ω₀ = 2πf = 2π/T"},
+ {q:"The Fourier Transform produces the ______ of a signal.",a:"Frequency spectrum (frequency-domain representation)"},
+ {q:"The unit step function is denoted by ______ and equals 1 for t ≥ 0.",a:"u(t)"},
+ {q:"The unit ramp signal is defined as r(t) = ______ for t ≥ 0.",a:"t"},
+ {q:"sinc(t) = ______.",a:"sin(t)/t"},
+ {q:"The unit parabolic signal is p(t) = ______ for t ≥ 0.",a:"t²/2"},
+ {q:"A signal satisfying x(−t) = −x(t) is an ______ signal.",a:"Odd signal"},
+ {q:"For an energy signal the average power P equals ______.",a:"Zero"},
+ {q:"For a power signal the total energy E equals ______.",a:"Infinity"},
+ {q:"A signal that repeats itself after every T₀ seconds is called a ______ signal.",a:"Periodic signal"},
+ {q:"The DC term of a trigonometric Fourier series is denoted by ______.",a:"a₀ = (1/T)∫_T x(t)dt"},
+ {q:"For an even signal, the coefficient ______ becomes zero.",a:"bₙ"},
+ {q:"The compact Fourier series is written as x(t) = C₀ + Σ Cₙ cos(______).",a:"nω₀t + θ"},
+ {q:"In the exponential Fourier series, bₙ = ______ in terms of Cₙ.",a:"−2 Im[Cₙ]"},
+ {q:"The area under x(t) equals the Fourier transform evaluated at ______.",a:"f = 0, i.e. X(0)"},
+ {q:"The area under X(f) equals ______.",a:"x(0)"},
+ {q:"The property −j2πt·x(t) ⇌ dX(f)/df is called the ______ property.",a:"Frequency differentiation property"},
+ {q:"If x(t) ⇌ X(f), then by the duality property X(t) ⇌ ______.",a:"x(−f)"}
+];
+
+const TF = [
+ {q:"Time scaling changes the duration of a signal.",a:true,e:"x(at) compresses (a > 1) or expands (a < 1) the duration."},
+ {q:"The Fourier series represents periodic signals.",a:true,e:"The Fourier series applies to periodic signals; the Fourier transform handles aperiodic ones."},
+ {q:"An impulse signal has infinite duration.",a:false,e:"An impulse exists only at a single instant — its duration is infinitesimal, its spectrum is infinite in extent."},
+ {q:"The frequency spectrum indicates frequency components of a signal.",a:true,e:"It shows the amplitude and phase of each frequency present."},
+ {q:"Every signal is both an energy signal and a power signal.",a:false,e:"A signal is either an energy signal or a power signal, never both."},
+ {q:"Discrete-time and continuous-time signals are both analog signals.",a:true,e:"Amplitude is continuous in both; only quantisation makes a signal digital."},
+ {q:"Time reversal of a signal is written as x(−t).",a:true,e:"The waveform mirrors about the vertical axis."},
+ {q:"For an odd periodic signal, aₙ = 0.",a:true,e:"Odd signals contain only sine terms."},
+ {q:"a₀ represents the peak amplitude of a periodic signal.",a:false,e:"a₀ is the average (DC) value, not the peak."},
+ {q:"The Fourier transform of a time-shifted signal changes only its phase spectrum.",a:true,e:"|e^(−j2πfT_d)| = 1, so only the phase changes."},
+ {q:"Multiplying a signal by a complex exponential shifts its spectrum in frequency.",a:true,e:"e^(j2πf_c t)x(t) ⇌ X(f − f_c)."},
+ {q:"The Fourier transform of dx(t)/dt is X(f)/(j2πf).",a:false,e:"It is j2πf·X(f); division by j2πf corresponds to integration."},
+ {q:"The signum function is discontinuous at t = 0.",a:true,e:"It jumps from −1 to +1 at the origin."},
+ {q:"A single rectangular pulse is a periodic signal.",a:false,e:"It occurs once, so it is aperiodic."},
+ {q:"In the compact Fourier series, Cₙ = √(aₙ² + bₙ²).",a:true,e:"Cₙ is the resultant magnitude of the cosine and sine parts."}
+];
+
+const MATCH = [
+ {colA:["Energy signal","Power signal","Time shifting","Frequency"],colB:["Infinite energy","Finite energy","Hz","x(t − t₀)"],a:[1,0,3,2]},
+ {colA:["u(t)","r(t)","sgn(t)","p(t)"],colB:["t²/2 for t ≥ 0","1 for t ≥ 0","t for t ≥ 0","+1 for t > 0, −1 for t < 0"],a:[1,2,3,0]},
+ {colA:["Even signal","Odd signal","a₀","ω₀"],colB:["2π/T","bₙ = 0","DC value","aₙ = 0"],a:[1,3,2,0]},
+ {colA:["x(2t)","x(t/2)","x(−t)","3x(t)"],colB:["Time reversal","Time compression","Amplitude scaling","Time expansion"],a:[1,3,0,2]},
+ {colA:["x(t − T_d)","e^(j2πf_c t)x(t)","dx(t)/dt","X(t)"],colB:["j2πf·X(f)","x(−f)","e^(−j2πfT_d)X(f)","X(f − f_c)"],a:[2,3,0,1]}
+];
+
+const SHORT = [
+ {q:"Define the signum function and sketch it.",a:"sgn(t) = +1 for t > 0 and −1 for t < 0 (undefined / taken as 0 at t = 0). Its graph is a horizontal line at +1 to the right of the origin and at −1 to the left, with a jump of 2 at t = 0."},
+ {q:"Draw the time-scaling operation on a signal.",a:"For x(t) defined over 0 to 3 with amplitude 2: x(2t) occupies 0 to 1.5 (compressed, a > 1) and x(t/2) occupies 0 to 6 (expanded, a < 1). Amplitude is unchanged; only the time axis is scaled."},
+ {q:"Write the trigonometric Fourier series and its coefficients.",a:"x(t) = a₀ + Σₙ₌₁^∞ [aₙ cos nω₀t + bₙ sin nω₀t], where a₀ = (1/T)∫_T x(t)dt, aₙ = (2/T)∫_T x(t)cos nω₀t dt, bₙ = (2/T)∫_T x(t)sin nω₀t dt, and ω₀ = 2π/T."},
+ {q:"Differentiate between an energy signal and a power signal.",a:"Energy signal: E = lim_{T→∞}∫|x(t)|²dt is finite and non-zero, P = 0; typically finite-duration, aperiodic signals. Power signal: P = lim_{T→∞}(1/T)∫|x(t)|²dt is finite and non-zero, E = ∞; typically periodic or everlasting signals. A signal cannot be both."},
+ {q:"Differentiate between a digital signal and a discrete-time signal.",a:"A discrete-time signal is defined only at discrete instants but its amplitude can take any value (it is still analog in amplitude). A digital signal is discrete in both time and amplitude — the amplitude is quantised into a finite set of levels, e.g. 0 and 1."},
+ {q:"State and prove the time-shifting property of the Fourier transform.",a:"x(t − T_d) ⇌ e^(−jωT_d)X(f). Proof: F{x(t−T_d)} = ∫x(t−T_d)e^(−jωt)dt. Put τ = t − T_d ⇒ t = τ + T_d, dt = dτ ⇒ ∫x(τ)e^(−jω(τ+T_d))dτ = e^(−jωT_d)∫x(τ)e^(−jωτ)dτ = e^(−jωT_d)X(f)."},
+ {q:"State and prove the frequency-shifting property.",a:"e^(j2πf_c t)x(t) ⇌ X(f − f_c). Proof: F{e^(j2πf_c t)x(t)} = ∫x(t)e^(j2πf_c t)e^(−j2πft)dt = ∫x(t)e^(−j2πt(f−f_c))dt = X(f − f_c)."},
+ {q:"Prove that the area under x(t) equals X(0).",a:"X(f) = ∫x(t)e^(−jωt)dt. Putting f = 0 gives e^0 = 1, so X(0) = ∫_{−∞}^{∞} x(t)dt — the total area under the signal."},
+ {q:"State the duality (symmetry) property with an example.",a:"If x(t) ⇌ X(f), then X(t) ⇌ x(−f). Example: a rectangular pulse in time transforms to a sinc/triangular-type spectrum; taking that same shape as a time function transforms back to a rectangular shape in frequency, reflected about f = 0."},
+ {q:"Explain the effect of symmetry on Fourier series coefficients.",a:"Even signal → only cosine terms, bₙ = 0. Odd signal → only sine terms, aₙ = 0 (and a₀ = 0). Neither odd nor even → both aₙ ≠ 0 and bₙ ≠ 0. Recognising symmetry first saves one full integration."},
+ {q:"Write the exponential Fourier series and relate its coefficients to aₙ and bₙ.",a:"x(t) = Σ_{n=−∞}^{∞} Cₙ e^(jnω₀t), with Cₙ = (1/T)∫_T x(t)e^(−jnω₀t)dt and C₀ = (1/T)∫_T x(t)dt. Relations: aₙ = 2Re[Cₙ], bₙ = −2Im[Cₙ]."},
+ {q:"Sketch x(−(t − 3)) given x(t), and explain the order of operations.",a:"First reverse: x(t) → x(−t), mirroring about the vertical axis. Then shift: x(−(t−3)) moves x(−t) by 3 units in the left direction as recorded in the notes. Always apply reversal on the raw time variable before the shift to avoid a sign error."}
+];
+
+const NUM = [
+ {q:"Determine the fundamental frequency of x(t) = 10 cos(120πt).",a:"ω₀ = 120π rad/s ⇒ f₀ = ω₀/2π = 60 Hz, and T = 1/60 s ≈ 16.67 ms."},
+ {q:"Find the period T and fundamental angular frequency ω₀ of x(t) = |sin t|.",a:"Rectification halves the period: T = π s, so ω₀ = 2π/T = 2 rad/s."},
+ {q:"A square wave alternates between +1 and −1 with T = 4 s. Find ω₀.",a:"ω₀ = 2π/T = 2π/4 = π/2 rad/s."},
+ {q:"For the rectangular pulse train x(t) = 1 for −π/2 < t < π/2 with T = 2π, find a₀.",a:"a₀ = (1/2π)∫_{−π/2}^{π/2} 1 dt = (1/2π)(π) = 1/2."},
+ {q:"For the same pulse train, find aₙ and evaluate a₁.",a:"aₙ = (2/nπ)sin(nπ/2). For n = 1: a₁ = 2/π ≈ 0.637. aₙ = 0 for even n, and the sign alternates for n = 3, 5, 7…"},
+ {q:"For the ±1 square wave of period T = 4 s, find a₁ and a₃.",a:"aₙ = 4/(nπ) for n = 1, 5, 9… and −4/(nπ) for n = 3, 7, 11… So a₁ = 4/π ≈ 1.273 and a₃ = −4/(3π) ≈ −0.424."},
+ {q:"For x(t) = |sin t|, compute C₀ and C₁ of the exponential Fourier series.",a:"C₀ = (1/π)∫₀^π sin t dt = 2/π ≈ 0.637. Cₙ = 2/[π(1 − 4n²)], so C₁ = 2/(π(1−4)) = −2/(3π) ≈ −0.212."},
+ {q:"Find the energy of x(t) = 5e^(−2t)u(t) and state whether it is an energy or power signal.",a:"E = ∫₀^∞ 25e^(−4t)dt = 25/4 = 6.25 J. The energy is finite and non-zero, so it is an energy signal with P = 0."}
+];
+
+/* ============================== STATE + RENDER ============================== */
+
+const KEYS = ["A","B","C","D"];
+const state = {};          // id -> "correct" | "wrong"
+let counter = 0;
+
+const el = (t,c,h)=>{const n=document.createElement(t);if(c)n.className=c;if(h!==undefined)n.innerHTML=h;return n;};
+
+function card(num, text){
+  const q = el("div","q");
+  const head = el("div","q-head");
+  head.appendChild(el("span","qn",num+"."));
+  head.appendChild(el("p","qt",text));
+  q.appendChild(head);
+  return q;
+}
+
+function mark(card,id,ok){
+  if(state[id]) return;
+  state[id] = ok ? "correct" : "wrong";
+  card.classList.add(ok?"correct":"wrong");
+  updateReadout();
+}
+
+/* --- MCQ --- */
+const mcqBox = document.getElementById("mcq");
+MCQ.forEach((item,i)=>{
+  const id = "m"+i, num = ++counter;
+  const c = card(num, item.q);
+  const ul = el("ul","opts");
+  item.o.forEach((opt,j)=>{
+    const li = document.createElement("li");
+    const b = el("button","opt");
+    b.innerHTML = '<span class="key">'+KEYS[j]+')</span><span>'+opt+'</span>';
+    b.addEventListener("click",()=>{
+      if(state[id]) return;
+      const ok = j===item.a;
+      [...ul.querySelectorAll(".opt")].forEach((btn,k)=>{
+        btn.disabled = true;
+        if(k===item.a) btn.classList.add("is-correct");
+        else if(k===j) btn.classList.add("is-wrong");
+      });
+      ans.classList.add("show");
+      mark(c,id,ok);
+    });
+    li.appendChild(b); ul.appendChild(li);
+  });
+  c.appendChild(ul);
+  const ans = el("div","ans",'<span class="lbl">Answer</span>'+KEYS[item.a]+") "+item.o[item.a]+" — "+item.e);
+  c.appendChild(ans);
+  mcqBox.appendChild(c);
+});
+
+/* --- Fill in the blanks + Short answer + Numerical (reveal + self-mark) --- */
+function revealBlock(box, list, prefix){
+  list.forEach((item,i)=>{
+    const id = prefix+i, num = ++counter;
+    const c = card(num, item.q);
+    const ans = el("div","ans",'<span class="lbl">Answer</span>'+item.a);
+    const tools = el("div","tools");
+    const show = el("button","mini","Show answer");
+    const got = el("button","mini pos","I got it");
+    const miss = el("button","mini neg","I missed it");
+    show.addEventListener("click",()=>{
+      ans.classList.toggle("show");
+      show.textContent = ans.classList.contains("show") ? "Hide answer" : "Show answer";
+    });
+    got.addEventListener("click",()=>{ans.classList.add("show");show.textContent="Hide answer";mark(c,id,true);});
+    miss.addEventListener("click",()=>{ans.classList.add("show");show.textContent="Hide answer";mark(c,id,false);});
+    tools.append(show,got,miss);
+    c.append(ans,tools);
+    box.appendChild(c);
+  });
+}
+revealBlock(document.getElementById("fill"), FILL, "f");
+
+/* --- True / False --- */
+const tfBox = document.getElementById("tf");
+TF.forEach((item,i)=>{
+  const id = "t"+i, num = ++counter;
+  const c = card(num, item.q);
+  const row = el("div","tf");
+  const ans = el("div","ans",'<span class="lbl">Answer</span>'+(item.a?"True":"False")+" — "+item.e);
+  [["True",true],["False",false]].forEach(([label,val])=>{
+    const b = el("button","opt",'<span>'+label+'</span>');
+    b.addEventListener("click",()=>{
+      if(state[id]) return;
+      [...row.querySelectorAll(".opt")].forEach(x=>x.disabled=true);
+      b.classList.add(val===item.a?"is-correct":"is-wrong");
+      if(val!==item.a){
+        [...row.querySelectorAll(".opt")].find(x=>x!==b).classList.add("is-correct");
+      }
+      ans.classList.add("show");
+      mark(c,id,val===item.a);
+    });
+    row.appendChild(b);
+  });
+  c.append(row,ans);
+  tfBox.appendChild(c);
+});
+
+/* --- Match the pair --- */
+const matchBox = document.getElementById("match");
+MATCH.forEach((set,i)=>{
+  const id = "p"+i, num = ++counter;
+  const c = card(num, "Match each entry in Column A with the correct entry in Column B.");
+  const wrap = el("div","match");
+  const table = document.createElement("table");
+  table.innerHTML = "<thead><tr><th>Column A</th><th>Column B</th></tr></thead>";
+  const tb = document.createElement("tbody");
+  const selects = [];
+  set.colA.forEach((a,r)=>{
+    const tr = document.createElement("tr");
+    tr.appendChild(el("td",null,(r+1)+". "+a));
+    const td = document.createElement("td");
+    const sel = document.createElement("select");
+    sel.innerHTML = '<option value="-1">— choose —</option>' +
+      set.colB.map((b,k)=>'<option value="'+k+'">'+KEYS[k]+". "+b+'</option>').join("");
+    selects.push(sel); td.appendChild(sel); tr.appendChild(td); tb.appendChild(tr);
+  });
+  table.appendChild(tb); wrap.appendChild(table);
+  const tools = el("div","tools");
+  const check = el("button","mini","Check this set");
+  const ans = el("div","ans",'<span class="lbl">Answer</span>'+
+    set.colA.map((a,r)=>(r+1)+" → "+KEYS[set.a[r]]).join(" · "));
+  check.addEventListener("click",()=>{
+    if(state[id]) return;
+    let all = true;
+    selects.forEach((s,r)=>{
+      const ok = Number(s.value)===set.a[r];
+      s.classList.add(ok?"ok":"no");
+      s.disabled = true;
+      if(!ok) all = false;
+    });
+    ans.classList.add("show");
+    mark(c,id,all);
+  });
+  tools.appendChild(check);
+  c.append(wrap,tools,ans);
+  matchBox.appendChild(c);
+});
+
+revealBlock(document.getElementById("short"), SHORT, "s");
+revealBlock(document.getElementById("num"), NUM, "n");
+
+/* ============================== READOUT + SCOPE ============================== */
+const rAtt=document.getElementById("r-att"),rCor=document.getElementById("r-cor"),
+      rWrong=document.getElementById("r-wrong"),rAcc=document.getElementById("r-acc");
+let accuracy = 1;
+
+function updateReadout(){
+  const vals = Object.values(state);
+  const cor = vals.filter(v=>v==="correct").length;
+  const wrong = vals.length - cor;
+  rAtt.textContent = vals.length;
+  rCor.textContent = cor;
+  rWrong.textContent = wrong;
+  rAcc.textContent = vals.length ? Math.round(cor/vals.length*100)+"%" : "—";
+  accuracy = vals.length ? cor/vals.length : 1;
+}
+
+/* Signature: the trace is clean when you're accurate and noisy when you're not. */
+const cv = document.getElementById("trace"), ctx = cv.getContext("2d");
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let phase = 0;
+
+function sizeCanvas(){
+  const r = window.devicePixelRatio||1;
+  cv.width = cv.clientWidth*r; cv.height = cv.clientHeight*r;
+  ctx.setTransform(r,0,0,r,0,0);
+}
+function drawTrace(){
+  const w = cv.clientWidth, h = cv.clientHeight, mid = h/2;
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle = "rgba(255,255,255,.07)";
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(w,mid); ctx.stroke();
+
+  const noise = (1-accuracy)*13;
+  const done = Object.keys(state).length/100;
+  ctx.beginPath();
+  for(let x=0;x<=w;x++){
+    const k = x/w;
+    const amp = 18*(0.35+0.65*Math.min(1,done*1.6+0.25));
+    const y = mid
+      - Math.sin(k*Math.PI*6 + phase)*amp
+      - Math.sin(k*Math.PI*17 + phase*1.7)*noise*Math.random();
+    x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle = "#4FD1AE";
+  ctx.lineWidth = 1.6;
+  ctx.stroke();
+}
+function loop(){ phase += 0.02; drawTrace(); requestAnimationFrame(loop); }
+sizeCanvas();
+window.addEventListener("resize",()=>{sizeCanvas();drawTrace();});
+reduce ? drawTrace() : loop();
+
+/* ============================== CONTROLS ============================== */
+document.querySelectorAll("[data-jump]").forEach(b=>{
+  b.addEventListener("click",()=>document.getElementById(b.dataset.jump).scrollIntoView());
+});
+document.getElementById("revealAll").addEventListener("click",e=>{
+  const on = e.target.getAttribute("aria-pressed")!=="true";
+  e.target.setAttribute("aria-pressed",on);
+  e.target.textContent = on ? "Hide all answers" : "Show all answers";
+  document.querySelectorAll(".ans").forEach(a=>a.classList.toggle("show",on));
+});
+document.getElementById("reset").addEventListener("click",()=>location.reload());
+</script>
+</body>
+</html>
