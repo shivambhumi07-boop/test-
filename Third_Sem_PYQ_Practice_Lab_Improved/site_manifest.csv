@@ -1,0 +1,40 @@
+id,subject,phase,year,title,pdf,source_file,original_pages
+paper_1,Formal Language and Automata Theory,mid,2024,April 2024 - Mid-Term - CSE (older paper),papers/01_April_2024_Mid_Term_CSE_older_paper.pdf,FLATPYQASSIGNMENT(1).pdf,13-14
+paper_2,Formal Language and Automata Theory,mid,2025,March 2025 - Mid-Term - CSE,papers/02_March_2025_Mid_Term_CSE.pdf,FLATPYQASSIGNMENT(1).pdf,5-5
+paper_3,Formal Language and Automata Theory,mid,2025,September 2025 - Mid-Term - CSE/AI/CPS/DS,papers/03_September_2025_Mid_Term_CSE_AI_CPS_DS.pdf,FLATPYQASSIGNMENT(1).pdf,8-8
+paper_4,Formal Language and Automata Theory,mid,2026,September 2026 - Mid-Term - CSE/AI/CPS/DS,papers/04_September_2026_Mid_Term_CSE_AI_CPS_DS.pdf,midsem 3rd semester(2).pdf,7-8
+paper_5,Formal Language and Automata Theory,end,2023,December 2023 - End-Term,papers/05_December_2023_End_Term.pdf,FLATPYQASSIGNMENT(1).pdf,11-12
+paper_6,Formal Language and Automata Theory,end,2025,May 2025 - End-Term - CSE,papers/06_May_2025_End_Term_CSE.pdf,FLATPYQASSIGNMENT(1).pdf,3-4
+paper_7,Formal Language and Automata Theory,end,2025,December 2025 - Supplementary Examination - CSE,papers/07_December_2025_Supplementary_Examination_CSE.pdf,FLATPYQASSIGNMENT(1).pdf,1-2
+paper_8,Design and Analysis of Algorithms,mid,2024,September 2024 - Mid-Term - CSE,papers/08_September_2024_Mid_Term_CSE.pdf,3rd Sem CSE PYQ'25(1).pdf,1-2
+paper_9,Design and Analysis of Algorithms,mid,2025,September 2025 - Mid-Term - CSE,papers/09_September_2025_Mid_Term_CSE.pdf,CSE_3rd_semPYQ(1).pdf,8-8
+paper_10,Design and Analysis of Algorithms,mid,2025,September 2025 - Mid-Term - IT,papers/10_September_2025_Mid_Term_IT.pdf,pyq_IT3rdsem(1).pdf,17-17
+paper_11,Design and Analysis of Algorithms,mid,2026,September 2026 - Mid-Term - CSE/DS,papers/11_September_2026_Mid_Term_CSE_DS.pdf,midsem 3rd semester(2).pdf,1-2
+paper_12,Design and Analysis of Algorithms,end,2024,November 2024 - End-Term - CSE/IT,papers/12_November_2024_End_Term_CSE_IT.pdf,3rd Sem CSE PYQ'25(1).pdf,3-4
+paper_13,Design and Analysis of Algorithms,end,2025,December 2025 - End-Term - IT,papers/13_December_2025_End_Term_IT.pdf,pyq_IT3rdsem(1).pdf,11-12
+paper_14,Design and Analysis of Algorithms,other,,DAA Practical - CSE,papers/14_DAA_Practical_CSE.pdf,CSE_3rd_semPYQ(1).pdf,18-18
+paper_15,Database Management System,mid,2025,March 2025 - Mid-Term - CSE (older semester version),papers/15_March_2025_Mid_Term_CSE_older_semester_version.pdf,3rd Sem CSE PYQ'25(1).pdf,5-6
+paper_16,Database Management System,mid,2025,September 2025 - Mid-Term - CSE/AI/CPS/DS,papers/16_September_2025_Mid_Term_CSE_AI_CPS_DS.pdf,CSE_3rd_semPYQ(1).pdf,3-4
+paper_17,Database Management System,mid,2025,September 2025 - Mid-Term - IT,papers/17_September_2025_Mid_Term_IT.pdf,pyq_IT3rdsem(1).pdf,2-2
+paper_18,Database Management System,mid,2026,September 2026 - Mid-Term - CSE/AI/CPS/DS,papers/18_September_2026_Mid_Term_CSE_AI_CPS_DS.pdf,midsem 3rd semester(2).pdf,3-4
+paper_19,Database Management System,end,2025,May 2025 - End-Term - CSE (older semester version),papers/19_May_2025_End_Term_CSE_older_semester_version.pdf,3rd Sem CSE PYQ'25(1).pdf,11-12
+paper_20,Database Management System,end,2025,November 2025 - End-Term - CSE/AI/CPS/DS,papers/20_November_2025_End_Term_CSE_AI_CPS_DS.pdf,CSE_3rd_semPYQ(1).pdf,10-11
+paper_21,Database Management System,end,2025,November 2025 - End-Term - IT,papers/21_November_2025_End_Term_IT.pdf,pyq_IT3rdsem(1).pdf,8-10
+paper_22,Computer Organization and Architecture,mid,2025,March 2025 - Mid-Term - CSE (older semester version),papers/22_March_2025_Mid_Term_CSE_older_semester_version.pdf,3rd Sem CSE PYQ'25(1).pdf,7-8
+paper_23,Computer Organization and Architecture,mid,2025,September 2025 - Mid-Term - CSE/AI/CPS/DS,papers/23_September_2025_Mid_Term_CSE_AI_CPS_DS.pdf,CSE_3rd_semPYQ(1).pdf,6-7
+paper_24,Computer Organization and Architecture,mid,2025,September 2025 - Mid-Term - IT,papers/24_September_2025_Mid_Term_IT.pdf,pyq_IT3rdsem(1).pdf,3-3
+paper_25,Computer Organization and Architecture,mid,2026,September 2026 - Mid-Term - CSE/AI/CPS/DS,papers/25_September_2026_Mid_Term_CSE_AI_CPS_DS.pdf,midsem 3rd semester(2).pdf,5-6
+paper_26,Computer Organization and Architecture,end,2025,May 2025 - End-Term - CSE (older semester version),papers/26_May_2025_End_Term_CSE_older_semester_version.pdf,3rd Sem CSE PYQ'25(1).pdf,13-15
+paper_27,Computer Organization and Architecture,end,2025,November 2025 - End-Term - CSE/AI/CPS/DS,papers/27_November_2025_End_Term_CSE_AI_CPS_DS.pdf,CSE_3rd_semPYQ(1).pdf,12-15
+paper_28,Computer Organization and Architecture,end,2025,November 2025 - End-Term - IT,papers/28_November_2025_End_Term_IT.pdf,pyq_IT3rdsem(1).pdf,13-14
+paper_29,Computer Organization and Architecture,other,2025,August 2025 - Mini Test - CSE/DS,papers/29_August_2025_Mini_Test_CSE_DS.pdf,CSE_3rd_semPYQ(1).pdf,1-1
+paper_30,Computer Organization and Architecture,other,2025,August 2025 - Mini Test - IT,papers/30_August_2025_Mini_Test_IT.pdf,pyq_IT3rdsem(1).pdf,4-4
+paper_31,Computer Organization and Architecture,other,,COA Practical,papers/31_COA_Practical.pdf,CSE_3rd_semPYQ(1).pdf,19-19
+paper_32,Signal and Communication Systems,mid,2025,September 2025 - Mid-Term - CSE/AI/CPS/DS,papers/32_September_2025_Mid_Term_CSE_AI_CPS_DS.pdf,CSE_3rd_semPYQ(1).pdf,5-5
+paper_33,Signal and Communication Systems,mid,2026,September 2026 - Mid-Term - CSE/AI/CPS/DS,papers/33_September_2026_Mid_Term_CSE_AI_CPS_DS.pdf,midsem 3rd semester(2).pdf,9-9
+paper_34,Signal and Communication Systems,end,2025,November 2025 - End-Term - CSE/AI/CPS/DS,papers/34_November_2025_End_Term_CSE_AI_CPS_DS.pdf,CSE_3rd_semPYQ(1).pdf,16-17
+paper_35,Signal and Communication Systems,end,2025,November 2025 - End-Term - IT,papers/35_November_2025_End_Term_IT.pdf,pyq_IT3rdsem(1).pdf,6-7
+paper_36,Signal and Communication Systems,other,2025,August 2025 - Mini Test - CSE,papers/36_August_2025_Mini_Test_CSE.pdf,CSE_3rd_semPYQ(1).pdf,2-2
+paper_37,Engineering Mathematics III,mid,2025,March 2025 - Mid-Term - IT,papers/37_March_2025_Mid_Term_IT.pdf,pyq_IT3rdsem(1).pdf,5-5
+paper_38,Engineering Mathematics III,end,2025,November 2025 - End-Term - IT,papers/38_November_2025_End_Term_IT.pdf,pyq_IT3rdsem(1).pdf,15-16
+paper_39,Engineering Mathematics III,other,2025,August 2025 - Mini Examination - IT/ECE,papers/39_August_2025_Mini_Examination_IT_ECE.pdf,pyq_IT3rdsem(1).pdf,1-1

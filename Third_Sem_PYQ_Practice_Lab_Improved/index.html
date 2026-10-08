@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#5b5bd6">
+<title>3rd Sem PYQ Practice Lab</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/practice" data-route="practice" aria-label="3rd Sem PYQ Practice Lab home">
+    <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 2 5 13.1h5.6L9.8 22 19 9.8h-5.5L13.2 2Z" fill="currentColor"/></svg>
+    <span>3rd Sem PYQ Practice Lab</span>
+  </a>
+  <nav class="topnav" aria-label="Primary navigation">
+    <button class="nav-btn active" data-view="practice" type="button">Practice</button>
+    <button class="nav-btn" data-view="dashboard" type="button">Dashboard</button>
+    <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+  </nav>
+</header>
+
+<main class="shell">
+  <div class="stepper" aria-label="Practice steps">
+    <button class="step active" data-step="choose" type="button"><span>1</span>Choose</button>
+    <span class="step-line" aria-hidden="true"></span>
+    <button class="step" data-step="solve" type="button"><span>2</span>Solve</button>
+    <span class="step-line" aria-hidden="true"></span>
+    <button class="step" data-step="results" type="button"><span>3</span>Results</button>
+  </div>
+
+  <section id="practiceView" class="view">
+    <div class="hero">
+      <div>
+        <span class="eyebrow">PYQ → Practice → Marks → Weak Topics</span>
+        <h1>Turn your past papers into a practice system.</h1>
+        <p>Pick a paper, solve one question at a time, upload your handwritten work, and build a useful weakness dashboard.</p>
+      </div>
+      <div class="hero-stat"><strong id="heroAttempted">0</strong><span>answers graded</span></div>
+    </div>
+
+    <section class="panel selector-panel" id="choosePanel">
+      <div class="section-head wrap-head">
+        <div><h2>Choose a paper</h2><p class="muted">39 papers loaded from your uploaded PYQs.</p></div>
+        <div class="data-actions">
+          <button id="exportBtn" class="ghost" type="button">Export progress</button>
+          <label class="ghost file-button">Import progress<input id="importFile" type="file" accept="application/json,.json"></label>
+        </div>
+      </div>
+
+      <div class="subject-row">
+        <label for="subjectSelect">Subject</label>
+        <select id="subjectSelect"></select>
+      </div>
+
+      <div class="filter-row" aria-label="Paper filters">
+        <div class="chip-group" id="phaseChips" aria-label="Exam type"></div>
+        <div class="chip-group" id="yearChips" aria-label="Year"></div>
+      </div>
+
+      <div class="search-row">
+        <label class="search-box" for="paperSearch"><span aria-hidden="true">⌕</span><input id="paperSearch" type="search" placeholder="Search papers, years, exam type…" autocomplete="off"></label>
+        <button id="clearTopicFilter" class="ghost hidden" type="button">Clear topic filter</button>
+      </div>
+
+      <div id="topicFilterNotice" class="topic-filter-notice hidden"></div>
+      <div id="paperGrid" class="paper-grid"></div>
+      <div id="paperEmpty" class="empty-state hidden"></div>
+    </section>
+
+    <section id="quizPanel" class="panel hidden" aria-live="polite">
+      <div class="quiz-head wrap-head">
+        <div>
+          <span class="eyebrow">2. Solve</span>
+          <h2 id="quizTitle"></h2>
+          <div id="progressText" class="muted"></div>
+        </div>
+        <div class="quiz-tools">
+          <button id="timerToggle" class="ghost" type="button">Enable timer</button>
+          <span id="timerDisplay" class="timer hidden" aria-live="polite">60:00</span>
+          <button id="sourceBtn" class="ghost" type="button">Open source PDF</button>
+        </div>
+      </div>
+      <div class="progress" aria-label="Question progress"><span id="progressBar"></span></div>
+
+      <div class="quiz-grid">
+        <article class="question-card">
+          <div class="q-top">
+            <div class="q-ident"><span class="q-badge" id="qBadge">Q1</span><span id="qMarks" class="marks">5 marks</span></div>
+            <button id="reviewBtn" class="review-btn" type="button" aria-pressed="false">☆ Review later</button>
+          </div>
+          <div id="questionText" class="question-text"></div>
+          <div id="questionNotice" class="notice hidden"></div>
+          <div class="topic-chips" id="topicChips"></div>
+
+          <div class="answer-area">
+            <div class="answer-head"><h3>Your answer</h3><span id="ocrStatus" class="muted"></span></div>
+            <textarea id="answerText" aria-label="Your answer" placeholder="Type your answer here, or upload a handwritten answer below."></textarea>
+
+            <div id="uploadDrop" class="upload-drop" tabindex="0">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg>
+              <div><strong>Drop an answer image here</strong><span>or choose a file • camera supported on mobile</span></div>
+              <label class="primary upload-choose">Choose file<input id="answerFile" type="file" accept="image/*,.txt,.md,.pdf" capture="environment"></label>
+            </div>
+            <div class="upload-meta"><span id="fileName" class="muted">No file selected</span><button id="removeFileBtn" class="ghost hidden" type="button">Remove / replace</button><button id="ocrBtn" class="ghost" type="button" disabled>Read image with OCR</button></div>
+            <div id="previewWrap" class="preview hidden"><img id="imagePreview" alt="Preview of uploaded handwritten answer"><iframe id="pdfPreview" title="Uploaded answer PDF preview"></iframe></div>
+
+            <button id="gradeBtn" class="primary wide" type="button">Grade answer</button>
+            <div id="gradeResult" class="grade-result hidden"></div>
+          </div>
+        </article>
+
+        <aside class="source-card">
+          <div class="source-head"><h3>Question Paper</h3><span id="sourcePageText" class="muted"></span></div>
+          <iframe id="paperFrame" title="Original source paper page"></iframe>
+        </aside>
+      </div>
+
+      <div class="mobile-actionbar" aria-label="Question actions">
+        <button id="mobilePrevBtn" class="ghost" type="button">← Previous</button>
+        <button id="mobileNextBtn" class="ghost" type="button">Next →</button>
+        <button id="mobileGradeBtn" class="primary" type="button">Grade</button>
+      </div>
+      <div class="quiz-actions desktop-actions"><button id="prevBtn" class="ghost" type="button">← Previous</button><button id="nextBtn" class="ghost" type="button">Next →</button></div>
+    </section>
+  </section>
+
+  <section id="dashboardView" class="view hidden">
+    <div class="hero compact"><div><span class="eyebrow">Progress</span><h1>Your practice dashboard.</h1><p>Progress is stored locally in this browser. Export a backup regularly.</p></div></div>
+    <div class="stats-grid">
+      <div class="stat"><span>Questions graded</span><strong id="statAttempts">0</strong></div>
+      <div class="stat"><span>Average score</span><strong id="statAvg">0%</strong></div>
+      <div class="stat"><span>Topics tracked</span><strong id="statTopics">0</strong></div>
+    </div>
+    <div class="chart-grid">
+      <section class="panel chart-card"><div class="section-head"><h2>Weak topics</h2><span class="muted">Lower % needs more practice</span></div><div id="topicChart" class="chart-wrap"></div></section>
+      <section class="panel chart-card"><div class="section-head"><h2>Score over time</h2><span class="muted">Recent graded answers</span></div><div id="scoreChart" class="chart-wrap"></div></section>
+    </div>
+    <section class="panel"><div class="section-head wrap-head"><div><h2>Weak topics</h2><p class="muted">Open related questions or practice only that topic.</p></div><button id="resetBtn" class="ghost danger" type="button">Reset progress</button></div><div id="weakTopics" class="topic-list"></div></section>
+    <section class="panel"><div class="section-head"><h2>Recent attempts</h2></div><div id="history" class="history"></div></section>
+  </section>
+</main>
+
+<footer>Built from your uploaded PYQ set • Automatic marks are a rubric estimate, not a teacher’s final grading. They do not reliably verify derivations, diagrams, calculations, or handwriting.</footer>
+<div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+<input id="downloadAnchor" type="hidden">
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
